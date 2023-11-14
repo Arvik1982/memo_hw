@@ -8,7 +8,7 @@ const sliceGame =createSlice({
     reducers:{
 
        gameRegimeReducer(state, action) {
-       state.gameRegime=true;
+        !state.gameRegime?state.gameRegime=true:state.gameRegime=false
         },
     },
 })

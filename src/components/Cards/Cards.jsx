@@ -42,6 +42,7 @@ function getTimerValue(startDate, endDate) {
  * pairsCount - сколько пар будет в игре
  * previewSeconds - сколько секунд пользователь будет видеть все карты открытыми до начала игры
  */
+
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
   const gameLightRegime= useSelector(state=>state.game.gameRegime)
