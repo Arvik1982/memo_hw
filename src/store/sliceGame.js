@@ -4,14 +4,19 @@ const sliceGame =createSlice({
 
     initialState:{
         gameRegime:false,
+        openCardItem:null,
     },
     reducers:{
 
        gameRegimeReducer(state, action) {
         !state.gameRegime?state.gameRegime=true:state.gameRegime=false
         },
+       setOpenCardItem(state, action) {
+            state.openCardItem=action.payload.card
+            
+            },
     },
 })
 
-export const{gameRegimeReducer}=sliceGame.actions;
+export const{gameRegimeReducer,setOpenCardItem}=sliceGame.actions;
 export default sliceGame.reducer
