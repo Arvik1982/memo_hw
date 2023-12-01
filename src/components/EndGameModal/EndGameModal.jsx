@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick }) {
-  
+  useEffect(()=>{console.log(gameNumber)},[])
 const gameNumber= useSelector(state=>state.game.gameNumber) 
 const gameDuration =gameDurationMinutes*60+gameDurationSeconds 
 
@@ -25,7 +25,7 @@ const gameDuration =gameDurationMinutes*60+gameDurationSeconds
       <img className={styles.image} src={imgSrc} alt={imgAlt} />
       <h2 className={styles.title}>{title}</h2>
       {(isWon===true) 
-      // & gameNumber===3 
+      & gameNumber===3 
       ?<input onChange={(event)=>{setUserName(event.target.value)
         console.log(userName)
         console.log(userName)
@@ -36,12 +36,12 @@ const gameDuration =gameDurationMinutes*60+gameDurationSeconds
         {gameDurationMinutes.toString().padStart("2", "0")}.{gameDurationSeconds.toString().padStart("2", "0")}
       </div>
 <div onClick={(isWon===true)
-  //  & gameNumber===3 
+   & gameNumber===3 
    ?()=>postNewLeader(userName,gameDuration):null}>
       <Button onClick={onClick}>Начать сначала</Button>
 </div>
       <Link onClick={(isWon===true)
-        //  & gameNumber===3 
+         & gameNumber===3 
          ? ()=>postNewLeader(userName,gameDuration):null} to="/game/leaderboard" > Перейти к лидерборду </Link>
     </div>
   )

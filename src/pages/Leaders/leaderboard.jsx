@@ -4,14 +4,10 @@ import { getLeaders } from "../../api"
 import { useEffect } from "react"
 import { useState } from "react"
 
-
-
 export function LeadersPage() {
 const [leaders, setLeaders] = useState();
 
 useEffect(()=>{
-  
-
 getLeaders()
 .then((data)=>{ 
 
