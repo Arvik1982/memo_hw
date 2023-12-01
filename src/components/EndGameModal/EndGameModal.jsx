@@ -15,7 +15,7 @@ const gameDuration =gameDurationMinutes*60+gameDurationSeconds
   
   const[userName,setUserName]=useState('Пользователь')
   
-  const title = isWon ? "Вы победили!" : "Вы проиграли!"
+  const title = isWon ? (gameNumber===3?"Вы попали на лидерборд":"Вы победили!") : "Вы проиграли!"
   const imgSrc = isWon ? celebrationImageUrl : deadImageUrl
   const imgAlt = isWon ? "celebration emodji" : "dead emodji"
 // {isWon? (() => postNewLeader(userName,time)):null}
@@ -24,7 +24,9 @@ const gameDuration =gameDurationMinutes*60+gameDurationSeconds
     <div className={styles.modal}>
       <img className={styles.image} src={imgSrc} alt={imgAlt} />
       <h2 className={styles.title}>{title}</h2>
-      {(isWon===true) & gameNumber===3 ?<input onChange={(event)=>{setUserName(event.target.value)
+      {(isWon===true) 
+      // & gameNumber===3 
+      ?<input onChange={(event)=>{setUserName(event.target.value)
         console.log(userName)
         console.log(userName)
 
@@ -33,10 +35,14 @@ const gameDuration =gameDurationMinutes*60+gameDurationSeconds
       <div className={styles.time}>
         {gameDurationMinutes.toString().padStart("2", "0")}.{gameDurationSeconds.toString().padStart("2", "0")}
       </div>
-<div onClick={(isWon===true) & gameNumber===3 ?()=>postNewLeader(userName,gameDuration):null}>
+<div onClick={(isWon===true)
+  //  & gameNumber===3 
+   ?()=>postNewLeader(userName,gameDuration):null}>
       <Button onClick={onClick}>Начать сначала</Button>
 </div>
-      <Link onClick={(isWon===true) & gameNumber===3 ? ()=>postNewLeader(userName,gameDuration):null} to="/game/leaderboard" > Перейти к лидерборду </Link>
+      <Link onClick={(isWon===true)
+        //  & gameNumber===3 
+         ? ()=>postNewLeader(userName,gameDuration):null} to="/game/leaderboard" > Перейти к лидерборду </Link>
     </div>
   )
 }
