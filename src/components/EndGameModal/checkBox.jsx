@@ -6,8 +6,10 @@ export function CheckboxFunc() {
 const dispatch =useDispatch()
   return (
     <div className={styles.checkbox}>
-      <h2>режим до 3х ошибок</h2>
-      <input onClick={()=>dispatch(gameRegimeReducer())} type="checkBox"></input>
+      <h2>Режим до трех ошибок</h2>
+      
+      <input id="checkBoxInput"  className={styles.custom__box} onClick={()=>dispatch(gameRegimeReducer())} type="checkBox"></input>
+      <label htmlFor="checkBoxInput" ></label>
     </div>
   )
 }
