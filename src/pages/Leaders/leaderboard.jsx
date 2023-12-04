@@ -21,13 +21,11 @@ for (let i=1; i<length; i++){
         {
          el.position = i++
         }   
-        
         }
         
     });
 }
 
-console.log(sortLeaders)
 setLeaders(sortLeaders)
 })
     },[])

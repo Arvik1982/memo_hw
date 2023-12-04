@@ -17,7 +17,7 @@ export async function postNewLeader(userName,time){
         method: "POST",
         body: JSON.stringify({
             name: `${userName}`,
-            time: `${time}`,
+            time: `${Number(time)}`,
         }),
     })
     const data = await response.json()

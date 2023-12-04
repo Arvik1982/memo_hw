@@ -61,7 +61,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const [gameEndDate, setGameEndDate] = useState(null)
   //счетчик попыток игры
   const [attempts, setAttempts] = useState('')
-
+//error in choise
+const [mistake, setMistake] = useState(false)
 
   // Стейт для таймера, высчитывается в setInteval на основе gameStartDate и gameEndDate
   const [timer, setTimer] = useState({
@@ -71,6 +72,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   function handleClickOpenNextCard(card){
   if(gameLightRegime) {!attemptCounter<= 0? restartAttempt(card):{}}
 }
+
   function restartAttempt(card) {
     console.log(card)
     const newCards = cards.map(item=>{
@@ -79,6 +81,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     })
     setCards(newCards)
   }
+
+
   function finishGame(status = STATUS_LOST) {
     setGameEndDate(new Date())
     setStatus(status)
@@ -129,6 +133,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     const isPlayerWon = nextCards.every(card => card.open)
     // Победа - все карты на поле открыты
     if (isPlayerWon) {
+      setMistake(false)
       console.log(attempts)
       finishGame(STATUS_WON)
       return
@@ -150,12 +155,15 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // "Игрок проиграл", т.к на поле есть две открытые карты без пары
 
+
+
     if (playerLost) {
+      setMistake(true)
       setAttempts(attempts - 1)
       attemptCounter = attempts
       if(gameLightRegime){
       attemptCounter <= 0 ? finishGame(STATUS_LOST) :{}
-      //restartAttempt()
+
       }
       else{finishGame(STATUS_LOST)}
       return
@@ -165,8 +173,41 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   }
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON
 
+  function openCardHelp (card){
+
+let idNext
+let suit
+let rank
+    let newArr
+    if(gameLightRegime&mistake){
+    setMistake(false)
+    let indexCard = cards.indexOf(card)
+    if (indexCard===cards.length-1){
+      idNext = cards[0].id
+      suit = cards[0].suit 
+      rank = cards[0].rank
+      }
+    else{
+      suit = cards[indexCard+1].suit
+      idNext = cards[indexCard+1].id
+      rank=cards[indexCard+1].rank
+    } 
+      
+   
+    newArr=cards.map((item)=>{ 
+    if (item.suit===suit & item.rank===rank &item.id!==card.id) {
+    return {...item, open:true, help:true}
+    }return{...item,open:false}
+      })
+      console.log(newArr)
+    setCards(newArr)
+    }
+    
+    }
+
   // Игровой цикл
   useEffect(() => {
+    
     setAttempts(2)
     // В статусах кроме превью доп логики не требуется
     if (status !== STATUS_PREVIEW) {
@@ -238,8 +279,11 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           
           <Card
             key={card.id}
-            onClick={() => {openCard(card); 
+            onClick={() => {
+            console.log(cards)
+            openCard(card); 
             handleClickOpenNextCard(card);
+            openCardHelp(card)
             }}
             open= {status !== STATUS_IN_PROGRESS? true :card.open} 
             suit={card.suit}
