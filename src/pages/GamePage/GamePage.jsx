@@ -6,7 +6,7 @@ import { useState } from "react"
 export function GamePage() {
   
   
-  const { pairsCount } = useParams()
+  const {pairsCount} = useParams()
 
   return (
     <>
