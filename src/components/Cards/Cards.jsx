@@ -1,4 +1,4 @@
-import { shuffle } from "lodash"
+import { indexOf, shuffle } from "lodash"
 import { useEffect, useState } from "react"
 import { generateDeck } from "../../utils/cards"
 import styles from "./Cards.module.css"
@@ -48,6 +48,10 @@ function getTimerValue(startDate, endDate) {
 
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
+  const superPowerA = useSelector(state=>state.game.superPowerA)
+  
+  const superPowerB = useSelector(state=>state.game.superPowerB)
+
   // режим 3 ошибки статус
   const gameLightRegime = useSelector(state=>state.game.gameRegime)
   let attemptCounter
@@ -61,14 +65,20 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const [gameEndDate, setGameEndDate] = useState(null)
   //счетчик попыток игры
   const [attempts, setAttempts] = useState('')
-//error in choise
-const [mistake, setMistake] = useState(false)
-
   // Стейт для таймера, высчитывается в setInteval на основе gameStartDate и gameEndDate
   const [timer, setTimer] = useState({
     seconds: 0,
     minutes: 0,
   })
+  //время паузы при суперсилах
+  const [pause, setPause]=useState(300)
+  const [newTimeStart, setNewTimeStart]=useState(new Date)
+
+//стейт для суперсилы А
+const[usedA, setUsedA]=useState(false)
+//стейт для суперсилы Б
+const[usedB, setUsedB]=useState(false)
+
   function handleClickOpenNextCard(card){
   if(gameLightRegime) {!attemptCounter<= 0? restartAttempt(card):{}}
 }
@@ -101,7 +111,78 @@ const [mistake, setMistake] = useState(false)
     setTimer(getTimerValue(null, null))
     setStatus(STATUS_PREVIEW)
   }
+function superPowerOpenCardsAll(){                                    //OPEN ALL
+setNewTimeStart(new Date()) 
+setPause(5000)
+let newCardsOpened;
+let resultNewCards;
+let lastCards;
 
+newCardsOpened=cards.map(item=>{
+if(item.open===true)return {...item,opened:true}
+  return{...item,opened:false}
+})
+resultNewCards = newCardsOpened.map(item=>{
+  return {...item,open:true}
+})
+setCards(resultNewCards)
+setTimeout(()=>{lastCards = resultNewCards.map(item=>{
+    if(!item.opened===true)return {...item, open:false}
+    return{...item, open:true}
+     }
+    )
+    setCards(lastCards);
+    // setGameStartDate(newTimeStart)
+    
+    setGameStartDate(newTimeStart) 
+    setPause(300) 
+    setTimer(getTimerValue(newTimeStart, null))
+    console.log(newTimeStart.getDate())
+    console.log(newTimeStart.getTime()/1000)
+
+    },5000)
+}
+
+
+
+function superPowerOpenCardsRandomPair(){                               //RANDOM PAIR
+let indexArr=[]
+let randomCardIndex;
+let randomCard;
+let newArrRandomOneCard=[];
+let newArrRandomTwoCards=[];
+for (let i=0; i<=cards.length-1; i++){
+  if(cards[i].open!==true){
+  console.log(cards.indexOf(cards[i]))
+indexArr=[...indexArr,cards.indexOf(cards[i])]
+randomCardIndex=indexArr[Math.floor(Math.random()*indexArr.length)]
+
+  }
+  
+}
+console.log(indexArr)   
+console.log(randomCardIndex)
+console.log(cards[randomCardIndex])
+
+randomCard=cards[randomCardIndex]
+
+newArrRandomOneCard=cards.map(item=>{
+    if(item.id===randomCard.id)
+    return {...item,open:true}
+    return {...item}
+  })
+console.log(newArrRandomOneCard)
+newArrRandomTwoCards=newArrRandomOneCard.map(item=>{
+  if(item.suit === randomCard.suit & item.rank === randomCard.rank )
+  return {...item,open:true}
+  return {...item}
+})
+ setCards(newArrRandomTwoCards)   
+    // newPairOpenArrResult = newPairOpenArr.map(item=>{
+    //   if(!item.opened===true)
+    //   return {...item,open:true}
+    // })
+}
   /**
    * Обработка основного действия в игре - открытие карты.
    * После открытия карты игра может пепереходит в следующие состояния
@@ -133,8 +214,6 @@ const [mistake, setMistake] = useState(false)
     const isPlayerWon = nextCards.every(card => card.open)
     // Победа - все карты на поле открыты
     if (isPlayerWon) {
-      setMistake(false)
-      console.log(attempts)
       finishGame(STATUS_WON)
       return
     }
@@ -158,7 +237,7 @@ const [mistake, setMistake] = useState(false)
 
 
     if (playerLost) {
-      setMistake(true)
+      
       setAttempts(attempts - 1)
       attemptCounter = attempts
       if(gameLightRegime){
@@ -173,37 +252,7 @@ const [mistake, setMistake] = useState(false)
   }
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON
 
-  function openCardHelp (card){
-
-let idNext
-let suit
-let rank
-    let newArr
-    if(gameLightRegime&mistake){
-    setMistake(false)
-    let indexCard = cards.indexOf(card)
-    if (indexCard===cards.length-1){
-      idNext = cards[0].id
-      suit = cards[0].suit 
-      rank = cards[0].rank
-      }
-    else{
-      suit = cards[indexCard+1].suit
-      idNext = cards[indexCard+1].id
-      rank=cards[indexCard+1].rank
-    } 
-      
-   
-    newArr=cards.map((item)=>{ 
-    if (item.suit===suit & item.rank===rank &item.id!==card.id) {
-    return {...item, open:true, help:true}
-    }return{...item,open:false}
-      })
-      console.log(newArr)
-    setCards(newArr)
-    }
-    
-    }
+  
 
   // Игровой цикл
   useEffect(() => {
@@ -237,12 +286,15 @@ let rank
   useEffect(() => {
     
     const intervalId = setInterval(() => {
+      
       setTimer(getTimerValue(gameStartDate, gameEndDate))
-    }, 300)
+    }, pause)
     return () => {
+      
       clearInterval(intervalId)
     }
-  }, [gameStartDate, gameEndDate])
+    
+  }, [gameStartDate, gameEndDate, pause])
 
   return (
     <div className={styles.container}>
@@ -270,6 +322,21 @@ let rank
             </>
           )}
         </div>
+        {status === STATUS_IN_PROGRESS ?
+        
+        
+        <div className={styles.superpower}>
+      
+          <div onClick={()=>{superPowerOpenCardsAll(); setUsedA(true)}} 
+          className={superPowerA==='a'?(!usedA?styles.superpower__select_elementA:{}):{}}>
+            </div>
+      
+            <div onClick={()=>{superPowerOpenCardsRandomPair(); setUsedB(true)}} 
+            className={superPowerB==='b'?(!usedB?styles.superpower__select_elementB:{}):{}}>
+              </div>
+              
+              
+              </div> : null}
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
       </div>
 
@@ -283,7 +350,7 @@ let rank
             console.log(cards)
             openCard(card); 
             handleClickOpenNextCard(card);
-            openCardHelp(card)
+            
             }}
             open= {status !== STATUS_IN_PROGRESS? true :card.open} 
             suit={card.suit}

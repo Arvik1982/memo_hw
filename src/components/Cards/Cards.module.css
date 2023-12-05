@@ -84,3 +84,37 @@
 .display{
   display: none;
 }
+.superpower{
+  display: flex;
+  gap: 15px;
+}
+.superpower__select_elementA{
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  cursor: pointer;
+  background-image: url(./a.svg);
+  background-repeat: no-repeat;
+  background-position: 100%;
+  background-size: 100%;
+  /* background-color: greenyellow; */
+  width: 43px;
+  height: 43px;
+  border: #9da1a3 solid 2px;
+  border-radius: 25px;
+}
+.superpower__select_elementB{
+  display: flex;
+    /* justify-content: center; */
+    align-items: center;
+  cursor: pointer;
+  background-image: url(./b.svg);
+  background-repeat: no-repeat;
+  background-position: 100%;
+  background-size: 100%;
+  background-color: #C2F5FF;
+  width: 43px;
+  height: 43px;
+  border: #9da1a3 solid 2px;
+  border-radius: 25px;
+}

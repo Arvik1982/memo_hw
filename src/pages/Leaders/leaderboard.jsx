@@ -41,6 +41,7 @@ setLeaders(sortLeaders)
     <div className={styles.table__header}>
         <h3 style={{fontWeight:'100'}}>Позиция</h3>
         <h3 style={{fontWeight:'lighter'}}>Пользователь</h3>
+        <h3 style={{fontWeight:'lighter'}}>Достижения</h3>
         <h3 style={{fontWeight:'lighter'}}>Время</h3>
     </div>
     {
@@ -50,6 +51,7 @@ setLeaders(sortLeaders)
         <div key={index} className={styles.table}>
         <h2>#{el.position}</h2>
         <h2>{el.name}</h2>
+        <h2>Достижения</h2>
         <h2>{
             Math.floor(el.time/60)
              }:{
