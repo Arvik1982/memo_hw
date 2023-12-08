@@ -71,13 +71,53 @@
   margin-bottom: -12px;
 }
 .attempts {
+  gap: 2px;
   display: flex;
   align-items: end;
-
   color: #fff;
   font-family: StratosSkyeng;
-  font-size: 20px;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 72px;
+}
+.display{
+  display: none;
+}
+.superpower{
+  display: flex;
+  gap: 15px;
+}
+.superpower__select_elementA{
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  cursor: pointer;
+  background-image: url(./a.svg);
+  background-repeat: no-repeat;
+  background-position: 100%;
+  background-size: 100%;
+  /* background-color: greenyellow; */
+  width: 43px;
+  height: 43px;
+  border: #9da1a3 solid 2px;
+  border-radius: 25px;
+}
+.superpower__select_elementB{
+  display: flex;
+    /* justify-content: center; */
+    align-items: center;
+  cursor: pointer;
+  background-image: url(./b.svg);
+  background-repeat: no-repeat;
+  background-position: 100%;
+  background-size: 100%;
+  background-color: #C2F5FF;
+  width: 43px;
+  height: 43px;
+  border: #9da1a3 solid 2px;
+  border-radius: 25px;
+}
+.display{
+  display: none;
 }
