@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 import styles from "./SelectLevelPage.module.css"
-import { CheckboxFunc } from "../../components/EndGameModal/checkBox"
+import { CheckboxFunc } from "../../components/EndGameModal/CheckBox"
 import {setGameNumber,setSuperpowerA, setSuperpowerB} from "../../store/sliceGame"
 import { useDispatch, useSelector } from "react-redux"
 import { useState } from "react"
@@ -67,7 +67,7 @@ const[superPowerOpen, setSuperPowerOpen]=useState('')
           </li>
         </ul>
         <CheckboxFunc />
-        <Link to="/game/leaderboard" > Перейти к лидерборду </Link>
+        <Link className={styles.text} to="/game/leaderboard" > Перейти к лидерборду </Link>
       </div>
     </div>
   )

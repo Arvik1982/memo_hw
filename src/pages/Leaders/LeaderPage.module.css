@@ -2,6 +2,7 @@
 .text{
   color: #fff;
   font-family: StratosSkyeng;
+  font-weight: 200;
 }
 
 .header{
@@ -39,6 +40,7 @@ justify-content: space-between;
 }
 
 .table__header{
+  position: relative;
   
   font-family: StratosSkyeng;
   font-size: 10px;
@@ -53,6 +55,7 @@ justify-content: space-between;
   justify-content: space-between;
 }
 .table{
+  position:relative;
   font-family: StratosSkyeng;
   font-size: 10px;
   margin-bottom: 5px;
@@ -64,4 +67,76 @@ justify-content: space-between;
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
+}
+.achievements__block{
+position: absolute;
+display: flex;
+flex-direction: row;
+align-items: center;
+gap: 6px;
+left: 63%;
+
+}
+.achievements__block_notpowered{
+  
+  width: 32px;
+  height: 32px;
+  background-image: url(./notpowered.svg);
+}
+
+.achievements__block_notpowered:hover::after{
+  position: absolute;
+ z-index: 10;
+  content: url(./hoverpowered.svg);
+  top: -270%;left:20%;
+  height: 50px;
+  width: 100px;
+ 
+}
+.achievements__block_notsuper{
+  
+  width: 32px;
+  height: 32px;
+  background-image:  url(./notsuper.svg);
+}
+
+.achievements__block_notsuper:hover::after{
+  position: absolute;
+ z-index: 10;
+  content: url(./hoversuper.svg);
+  top: -270%;left:80%;
+  height: 50px;
+  width: 100px;
+ 
+}
+.achievements__block_powered{
+  
+  width: 32px;
+  height: 32px;
+  background-image: url(./powered.svg);
+}
+.achievements__block_powered:hover::after{
+  position: absolute;
+ z-index: 10;
+  content: url(./hoverpowered.svg);
+  top: -270%;left:20%;
+  height: 50px;
+  width: 100px;
+ 
+}
+
+.achievements__block_super{
+  
+  width: 32px;
+  height: 32px;
+  background-image: url(./super.svg);
+}
+.achievements__block_super:hover::after{
+  position: absolute;
+ z-index: 10;
+  content: url(./hoversuper.svg);
+  top: -270%;left:80%;
+  height: 50px;
+  width: 100px;
+ 
 }

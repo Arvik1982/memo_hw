@@ -163,6 +163,13 @@
 .levelLink:visited {
   color: #0080c1;
 }
-
-
+.text{
+  color: #004980;
+  font-family: StratosSkyeng;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-style: normal;
+}
+.text:hover{
+  color: #565EEF
+}
 

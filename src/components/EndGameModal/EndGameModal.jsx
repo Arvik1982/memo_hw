@@ -6,12 +6,17 @@ import { Link } from "react-router-dom"
 import { postNewLeader } from "../../api"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
+import { setGamePaused } from "../../store/sliceGame"
+
 
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick }) {
-  useEffect(()=>{console.log(gameNumber)},[])
+  
 const gameNumber= useSelector(state=>state.game.gameNumber) 
 const gameDuration = gameDurationMinutes*60+gameDurationSeconds 
 
+const gameHardRegime= useSelector(state=>state.game.gameRegime) 
+const superPowerA = useSelector(state=>state.game.superPowerA)
+const superPowerB = useSelector(state=>state.game.superPowerB)
   
   const[userName,setUserName]=useState('Пользователь')
   
@@ -27,8 +32,7 @@ const gameDuration = gameDurationMinutes*60+gameDurationSeconds
       {(isWon===true) 
       // & gameNumber===3 
       ?<input onChange={(event)=>{setUserName(event.target.value)
-        console.log(userName)
-        console.log(userName)
+        
 
         }} className={styles.input} type="text" placeholder= "Пользователь"></input>:null}
       <p className={styles.description}>Затраченное время:</p>
@@ -37,12 +41,15 @@ const gameDuration = gameDurationMinutes*60+gameDurationSeconds
       </div>
 <div onClick={(isWon===true)
   //  & gameNumber===3 
-   ?()=>postNewLeader(userName,gameDuration):null}>
+   ?()=>postNewLeader(userName,gameDuration,superPowerA,superPowerB, gameHardRegime):null}>
+      
       <Button onClick={onClick}>Начать сначала</Button>
+     
+
 </div>
-      <Link onClick={(isWon===true)
+      <Link className={styles.text} onClick={(isWon===true)
         //  & gameNumber===3 
-         ? ()=>postNewLeader(userName,gameDuration):null} to="/game/leaderboard" > Перейти к лидерборду </Link>
+         ? ()=>postNewLeader(userName,gameDuration,superPowerA,superPowerB, gameHardRegime):null} to="/game/leaderboard" > Перейти к лидерборду </Link>
     </div>
   )
 }
