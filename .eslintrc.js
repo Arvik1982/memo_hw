@@ -3,7 +3,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ["eslint:recommended", "prettier", "react-app", "react-app/jest","plugin:react/jsx-runtime"],
+  extends: 'airbnb',
   overrides: [
     {
       env: {
@@ -29,6 +29,6 @@ module.exports = {
     "no-unused-vars": ["error"],
     "react/jsx-uses-react": off,
     "react/react-in-jsx-scope": off,
-    
+
   },
-}
+};
